@@ -5,8 +5,10 @@
 
 int main()
 {
-    std::cout << "Hello World!";
-    Card card(ACE, SPADES);
-    
+    std::cout << "Hello World!\n";
+
+    Column mycolumn;
+    //mycolumn.Add(Card(QUEEN, CLUBS)); 
+
     return 0;
 }
