@@ -4,6 +4,7 @@
 #include <stack>
 #include <Card.hpp>
 
+
 class Deck
 {
 private:
@@ -18,9 +19,10 @@ public:
     // defined in Deck.cpp
     Deck(bool full); // true - Deck will be full
 
-    const Card& operator[] (unsigned int);
-    const Card& Remove(unsigned int);
+    Card& operator[] (unsigned int);
+    Card& Remove(unsigned int);
     void Add(Card);
+    void Shuffle();
 };
 
 class Column
@@ -36,13 +38,13 @@ public:
     void Push(Card card) { Cards.push_back(card); }
 
     // defined in Column.cpp
-    const Card& operator[] (unsigned int);
+    Card& operator[] (unsigned int);
     void Add(Card); 
     void Add(Column);
-    const Column& Remove(unsigned int); // removes & returns first x cards
+    Column& Remove(unsigned int); // removes & returns first x cards
 
     // defined in UI.cpp
-    void Show();
+    void Show() const;
 };
 
 class Stack
@@ -52,21 +54,23 @@ private:
     std::stack<Card> Cards;
 
 public:
+    Stack() {}
     Stack(CardSuits sui) : Suit(sui) {}
     Stack(Card card) : Suit(card.GetSuit()), Cards({card}) {}
 
     // defined in Stack.cpp
     void Add(Card card);
-    const Card& Remove();
-    const Card& Top();
+    Card& Remove();
+    Card& Top();
 
     // defined in UI.cpp (include the lack of card)
-    void Show();
+    void Show() const;
 };
 
 
-enum PointerMode { MENU, STACK, COLUMN, HAND };
+enum PointerMode { MENU = 1, STACK, COLUMN, HAND };
 
+class Board;
 class Pointer
 {
 private:
@@ -75,7 +79,13 @@ private:
     unsigned int Y;
 
 public:
+    Board* Board;
+
     Pointer(PointerMode mod = COLUMN) : Mode(mod), X(0), Y(0) {}
+
+    PointerMode GetMode() { return Mode; }
+    unsigned int GetX() { return X; }
+    unsigned int GetY() { return Y; }
 
     // defined in Pointer.cpp
     void AlterMode();
@@ -83,5 +93,22 @@ public:
     void MvDown();
     void MvLeft();
     void MvRight();
+
+    // defined in UI.cpp
+    void Show();
 };
 
+class Board
+{
+public:
+    Deck Hand;
+    int CurrentCard;
+    Column* Columns;
+    Stack* Stacks;
+    Pointer Pointer;
+
+    Board();
+    ~Board();
+
+    void Show();
+};

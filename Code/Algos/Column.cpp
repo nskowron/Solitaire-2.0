@@ -1,7 +1,7 @@
 #include <Board.hpp>
 #include <exception>
 
-const Card& Column::operator[] (unsigned int i)
+Card& Column::operator[] (unsigned int i)
 {
     if(i < Cards.size())
         return Cards.at(i);
@@ -53,7 +53,7 @@ void Column::Add(Column col)
     }
 }
 
-const Column& Column::Remove(unsigned int i)
+Column& Column::Remove(unsigned int i)
 {
     if(i > Cards.size())
         throw "There aren't that many cards in the column.\n";

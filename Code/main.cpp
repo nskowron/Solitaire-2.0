@@ -7,8 +7,8 @@ int main()
 {
     std::cout << "Hello World!\n";
 
-    Column mycolumn;
-    //mycolumn.Add(Card(QUEEN, CLUBS)); 
+    Board myboard;
+    myboard.Show();
 
     return 0;
 }

@@ -3,30 +3,29 @@
 
 void Stack::Add(Card card)
 {
-    if(Suit != card.GetSuit())
-        throw "Card must be of the same suit as the stack.\n";
-
     if(Cards.empty())
     {
         if(card.GetValue() == ACE)
         {
             Cards.push(card);
+            Suit = card.GetSuit();
             return;
         }
         throw "Cards have to be stacked increasingly, starting with an Ace.\n";
     }
-    else
+
+    if(Suit != card.GetSuit())
+        throw "Card must be of the same suit as the stack.\n";
+
+    if(card.GetValue() == Cards.top().GetValue() + 1)
     {
-        if(card.GetValue() == Cards.top().GetValue() + 1)
-        {
-            Cards.push(card);
-            return;
-        }
-        throw "Cards have to be stacked increasingly, starting with an Ace.\n";
+        Cards.push(card);
+        return;
     }
+    throw "Cards have to be stacked increasingly, starting with an Ace.\n";
 }
 
-const Card& Stack::Remove()
+Card& Stack::Remove()
 {
     if(Cards.empty())
         throw "The stack is empty.\n";
@@ -36,7 +35,7 @@ const Card& Stack::Remove()
     return card;
 }
 
-const Card& Stack::Top()
+Card& Stack::Top()
 {
     if(Cards.empty())
         throw "The stack is empty.\n";

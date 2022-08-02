@@ -20,5 +20,5 @@ public:
     bool operator == (Card card) { return Value == card.GetValue() && Suit == card.GetSuit(); }
 
     // defined in UI.cpp
-    void Show();
+    void Show() const;
 };
