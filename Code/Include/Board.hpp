@@ -3,6 +3,7 @@
 #include <vector>
 #include <stack>
 #include <Card.hpp>
+#include <Pointer.hpp>
 
 
 class Deck
@@ -67,37 +68,7 @@ public:
     void Show() const;
 };
 
-
-enum PointerMode { MENU = 1, STACK, COLUMN, HAND };
-
-class Board;
-class Pointer
-{
-private:
-    PointerMode Mode;
-    unsigned int X;
-    unsigned int Y;
-
-public:
-    Board* Board;
-
-    Pointer(PointerMode mod = COLUMN) : Mode(mod), X(0), Y(0) {}
-
-    PointerMode GetMode() { return Mode; }
-    unsigned int GetX() { return X; }
-    unsigned int GetY() { return Y; }
-
-    // defined in Pointer.cpp
-    void AlterMode();
-    void MvUp();
-    void MvDown();
-    void MvLeft();
-    void MvRight();
-
-    // defined in UI.cpp
-    void Show();
-};
-
+class Pointer;
 class Board
 {
 public:
@@ -105,10 +76,11 @@ public:
     int CurrentCard;
     Column* Columns;
     Stack* Stacks;
-    Pointer Pointer;
 
+    // defined in Board.cpp
     Board();
     ~Board();
 
-    void Show();
+    // defined in UI.cpp
+    void Show(Pointer*);
 };

@@ -1,14 +1,13 @@
 #include <iostream>
+#include <conio.h>
 
-#include <Card.hpp>
-#include <Board.hpp>
+#include <Game.hpp>
 
 int main()
 {
     std::cout << "Hello World!\n";
-
-    Board myboard;
-    myboard.Show();
+    Game mygame;
+    mygame.Show();
 
     return 0;
 }

@@ -6,7 +6,6 @@ Board::Board() : Hand(true), CurrentCard(-1)
 {
     Columns = new Column[7];
     Stacks = new Stack[4];
-    Pointer.Board = this;
 
     Hand.Shuffle();
     for(int i = 0; i < 7; ++i)

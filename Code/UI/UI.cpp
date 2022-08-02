@@ -1,4 +1,8 @@
 #include <Board.hpp>
+#include <Menu.hpp>
+#include <Pointer.hpp>
+#include <Game.hpp>
+
 #include <iostream>
 #include <Windows.h>
 
@@ -59,19 +63,19 @@ void Stack::Show() const
 void Pointer::Show()
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(console, 5);
+    SetConsoleTextAttribute(console, Color);
     std::cout << "<";
     SetConsoleTextAttribute(console, 7);
 }
 
-void Board::Show()
+void Board::Show(Pointer* Pointer)
 {
     // Stacks
     for(int i = 0; i < 4; ++i)
     {
         Stacks[i].Show();
-        if(Pointer.GetMode() == STACK && Pointer.GetX() == i)
-            Pointer.Show();
+        if(Pointer->GetMode() == STACK && Pointer->GetX() == i)
+            Pointer->Show();
         std::cout << "\t";  // or another measure of distance
     }
     std::cout << "\t";
@@ -80,15 +84,15 @@ void Board::Show()
     if(CurrentCard + 1 < Hand.Size())
     {
         Hand[CurrentCard + 1].Show();
-        if(Pointer.GetMode() == HAND && Pointer.GetX() == 0)
-            Pointer.Show();
+        if(Pointer->GetMode() == HAND && Pointer->GetX() == 0)
+            Pointer->Show();
     }
     std::cout << "\t";
     if(CurrentCard >= 0)
     {
         Hand[CurrentCard].Show();
-        if(Pointer.GetMode() == HAND && Pointer.GetX() == 1)
-            Pointer.Show();
+        if(Pointer->GetMode() == HAND && Pointer->GetX() == 1)
+            Pointer->Show();
     }
     
     std::cout << "\n___________________________________________________\n";
@@ -104,15 +108,43 @@ void Board::Show()
             {
                 Columns[j][i].Show();
                 cardShown = true;
-                if(Pointer.GetMode() == COLUMN && Pointer.GetX() == j)
-                {
-                    if(Pointer.GetY() == Columns[j].Size() - 1 - i)
-                        Pointer.Show();
-                }
+                if(Pointer->GetMode() == COLUMN && Pointer->GetX() == j && Pointer->GetY() == i)
+                    Pointer->Show();
             }
             std::cout << "\t";
         }
         std::cout << "\n";
     }
-    
+}
+
+void Menu::Show(Pointer* Pointer)
+{
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    SetConsoleTextAttribute(console, 3);
+    std::cout << "New Game";
+    SetConsoleTextAttribute(console, 7);
+    if(Pointer->GetMode() == MENU && Pointer->GetX() == 0)
+        Pointer->Show();
+    std::cout << "\t|\t";
+
+    SetConsoleTextAttribute(console, 3);
+    std::cout << "Quit";
+    SetConsoleTextAttribute(console, 7);
+    if(Pointer->GetMode() == MENU && Pointer->GetX() == 0)
+        Pointer->Show();
+    std::cout << "\t|\t";
+
+    SetConsoleTextAttribute(console, 3);
+    std::cout << "Properties";
+    SetConsoleTextAttribute(console, 7);
+    if(Pointer->GetMode() == MENU && Pointer->GetX() == 0)
+        Pointer->Show();
+}
+
+void Game::Show()
+{
+    menu.Show(&pointer);
+    std::cout << "\n________________________________________\n\n";
+    board.Show(&pointer);
 }
