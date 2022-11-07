@@ -7,7 +7,7 @@ int main()
 {
     std::cout << "Hello World!\n";
     Game mygame;
-    mygame.Show();
+    mygame.Play();
 
     return 0;
 }

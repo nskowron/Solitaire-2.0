@@ -28,7 +28,7 @@ public:
 
 class Column
 {
-public:
+private:
     std::vector<Card> Cards;
 
 public:
@@ -42,7 +42,8 @@ public:
     Card& operator[] (unsigned int);
     void Add(Card); 
     void Add(Column);
-    Column& Remove(unsigned int); // removes & returns first x cards
+    void Remove(unsigned int); // removes & returns first x cards
+    Column PickUp(unsigned int); // copies first x cards, doesnt remove them
 
     // defined in UI.cpp
     void Show() const;
@@ -68,10 +69,46 @@ public:
     void Show() const;
 };
 
+enum PointerMode;
+class Clipboard // keeps data about the origin of the clipboard card
+{
+    struct Data
+    {
+        Column* column;
+        Card* card;
+        Column real_col;
+        Card real_card;
+        Data() : real_card(ACE, SPADES) {}
+    };
+    struct Origin
+    {
+        PointerMode mode;
+        unsigned int X;
+    };
+
+public:
+    Data data;
+
+public:
+    Origin origin;
+
+    void Clear()
+    {
+        data.card = nullptr;
+        data.column = nullptr;
+    }
+    bool Empty()
+    {
+        return data.card == nullptr && data.column == nullptr;
+    }
+    Clipboard() { Clear(); }
+};
+
 class Pointer;
 class Board
 {
 public:
+    Clipboard Clip;
     Deck Hand;
     int CurrentCard;
     Column* Columns;
@@ -80,6 +117,7 @@ public:
     // defined in Board.cpp
     Board();
     ~Board();
+    void RemoveClip();
 
     // defined in UI.cpp
     void Show(Pointer*);

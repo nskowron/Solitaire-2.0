@@ -53,7 +53,23 @@ void Column::Add(Column col)
     }
 }
 
-Column& Column::Remove(unsigned int i)
+void Column::Remove(unsigned int i)
+{
+    if(i > Cards.size())
+    throw "There aren't that many cards in the column.\n";
+
+    if(Cards.at(Cards.size() - i).Front == false)
+        throw "Can't remove uncovered cards.\n";
+
+    while(i > 0)
+    {
+        auto currentCard = Cards.end() - i--;
+        Cards.erase(currentCard);
+    }
+    Cards.back().Front = true;
+}
+
+Column Column::PickUp(unsigned int i)
 {
     if(i > Cards.size())
         throw "There aren't that many cards in the column.\n";
@@ -66,9 +82,7 @@ Column& Column::Remove(unsigned int i)
     {
         auto currentCard = Cards.end() - i--;
         col.Cards.push_back(*currentCard);
-        Cards.erase(currentCard);
     }
-    Cards.back().Front = true;
 
     return col;
 }

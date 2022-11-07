@@ -38,7 +38,7 @@ void Pointer::MvLeft()
                         if(Y >= _Board->Columns[X].Size())
                             Y = _Board->Columns[X].Size() - 1;
                         break;
-        case MENU:      X = (X + 2) % 3; break;
+        //case MENU:      X = (X + 2) % 3; break;
     }
 }
 
@@ -52,6 +52,6 @@ void Pointer::MvRight()
                         if(Y >= _Board->Columns[X].Size())
                             Y = _Board->Columns[X].Size() - 1;
                         break;
-        case MENU:      X = (X + 1) % 3; break;
+        //case MENU:      X = (X + 1) % 3; break;
     }
 }

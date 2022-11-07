@@ -6,7 +6,7 @@
 class Board;
 class Menu;
 
-enum PointerMode { COLUMN = 1, HAND, STACK, MENU, PROPERTIES };
+enum PointerMode { COLUMN = 1, HAND, STACK /*MENU*/, PROPERTIES };
 
 class Pointer
 {

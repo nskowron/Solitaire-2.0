@@ -82,11 +82,10 @@ void Board::Show(Pointer* Pointer)
 
     // Hand
     if(CurrentCard + 1 < Hand.Size())
-    {
         Hand[CurrentCard + 1].Show();
-        if(Pointer->GetMode() == HAND && Pointer->GetX() == 0)
-            Pointer->Show();
-    }
+    if(Pointer->GetMode() == HAND && Pointer->GetX() == 0)
+        Pointer->Show();
+        
     std::cout << "\t";
     if(CurrentCard >= 0)
     {
@@ -117,34 +116,55 @@ void Board::Show(Pointer* Pointer)
     }
 }
 
+/*
 void Menu::Show(Pointer* Pointer)
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    SetConsoleTextAttribute(console, 3);
-    std::cout << "New Game";
-    SetConsoleTextAttribute(console, 7);
-    if(Pointer->GetMode() == MENU && Pointer->GetX() == 0)
-        Pointer->Show();
-    std::cout << "\t|\t";
+    std::cout << "|  ";
+    for(int i = 0; i < 3; ++i)
+    {
+        SetConsoleTextAttribute(console, 3);
+        std::cout << MenuStrings.at(i);
+        SetConsoleTextAttribute(console, 7);
+
+        if(Pointer->GetMode() == MENU && Pointer->GetX() == i)
+        {
+            Pointer->Show();
+            std::cout << " |  ";
+        }
+        else std::cout << "  |  ";
+    }
+} */
+
+/*
+void Menu::ShowProperties(Pointer* Pointer)
+{
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    for(int i = 0; i < Properties.size(); ++i)
+    {
+        SetConsoleTextAttribute(console, 3);
+        std::cout << PropertyStrings.at(i);
+        SetConsoleTextAttribute(console, 7);
+        std::cout << ": " << Properties[PropertyNames(i)];
+
+        if(Pointer->GetMode() == PROPERTIES && Pointer->GetY() == i)
+            Pointer->Show();
+
+        std::cout << "\n";
+    }
 
     SetConsoleTextAttribute(console, 3);
-    std::cout << "Quit";
+    std::cout << "ESC";
     SetConsoleTextAttribute(console, 7);
-    if(Pointer->GetMode() == MENU && Pointer->GetX() == 0)
+    if(Pointer->GetMode() == PROPERTIES && Pointer->GetY() == Properties.size())
         Pointer->Show();
-    std::cout << "\t|\t";
-
-    SetConsoleTextAttribute(console, 3);
-    std::cout << "Properties";
-    SetConsoleTextAttribute(console, 7);
-    if(Pointer->GetMode() == MENU && Pointer->GetX() == 0)
-        Pointer->Show();
-}
+} */
 
 void Game::Show()
 {
-    menu.Show(&pointer);
-    std::cout << "\n________________________________________\n\n";
+    //menu.Show(&pointer);
+    //std::cout << "\n___________________________________________________\n\n";
     board.Show(&pointer);
 }
