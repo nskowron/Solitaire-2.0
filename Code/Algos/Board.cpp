@@ -1,7 +1,5 @@
 #include <Board.hpp>
 
-void Foo() {}
-
 Board::Board() : Hand(true), CurrentCard(-1)
 {
     Columns = new Column[7];
@@ -26,6 +24,45 @@ Board::~Board()
     delete [] Stacks;
 }
 
+void Board::AddToClip(Pointer* pointer)
+{
+    Clip.origin.mode = pointer->GetMode();
+    Clip.origin.X = pointer->GetX();
+
+    if(pointer->GetMode() == HAND)
+        Clip.data.card = Hand[CurrentCard];
+
+    else if(pointer->GetMode() == COLUMN)
+        Clip.data.column = Columns[pointer->GetX()].PickUp(Columns[pointer->GetX()].Size() - pointer->GetY());
+
+    else if(pointer->GetMode() == STACK)
+        Clip.data.card = Stacks[pointer->GetX()].Top();
+}
+
+void Board::PutBackClip(Pointer* pointer)
+{
+    if(pointer->GetMode() == HAND)
+        throw "Can't put cards here.\n";
+
+    else if(pointer->GetMode() == COLUMN)
+    {
+        if(Clip.data.card == Card())
+            Columns[pointer->GetX()].Add(Clip.data.column);
+        else
+            Columns[pointer->GetX()].Add(Clip.data.card);
+    }
+    else if(pointer->GetMode() == STACK)
+    {
+        if(Clip.data.column.Size() > 1)
+            throw "Can put only 1 card on a stack.\n";
+
+        else if(Clip.data.column.Size() == 1)
+            Stacks[pointer->GetX()].Add(Clip.data.column[0]);
+        else
+            Stacks[pointer->GetX()].Add(Clip.data.card);
+    }
+}
+
 void Board::RemoveClip()
 {
     if(Clip.Empty() == false)
@@ -42,4 +79,18 @@ void Board::RemoveClip()
         else if(Clip.origin.mode == STACK)
             Stacks[Clip.origin.X].Remove();
     }
+}
+
+void Board::FlipHand()
+{
+    if(CurrentCard + 1 == Hand.Size())
+        CurrentCard = -1;
+    else
+    {
+        CurrentCard++;
+        Hand[CurrentCard].Front = true;
+    }
+
+    if(CurrentCard + 1 != Hand.Size())
+        Hand[CurrentCard + 1].Front = false;
 }

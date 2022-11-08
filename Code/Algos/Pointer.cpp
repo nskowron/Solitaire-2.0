@@ -9,6 +9,9 @@ Pointer::Pointer(Menu* men, Board* boa, PointerMode mod)
 void Pointer::AlterMode()
 {
     Mode = PointerMode(Mode % 3 + 1);
+    if(Mode == HAND && _Board->Hand.Size() == 0)
+        Mode = PointerMode(Mode + 1);
+    
     X = Y = 0;
 }
 

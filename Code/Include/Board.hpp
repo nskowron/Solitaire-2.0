@@ -60,6 +60,8 @@ public:
     Stack(CardSuits sui) : Suit(sui) {}
     Stack(Card card) : Suit(card.GetSuit()), Cards({card}) {}
 
+    unsigned int Size() { return Cards.size(); }
+
     // defined in Stack.cpp
     void Add(Card card);
     Card& Remove();
@@ -85,8 +87,6 @@ class Clipboard // keeps data about the origin of the clipboard card
 
 public:
     Data data;
-
-public:
     Origin origin;
 
     void Clear() { data.card = Card(); data.column = Column(); }
@@ -106,7 +106,10 @@ public:
     // defined in Board.cpp
     Board();
     ~Board();
+    void AddToClip(Pointer*);
+    void PutBackClip(Pointer*);
     void RemoveClip();
+    void FlipHand();
 
     // defined in UI.cpp
     void Show(Pointer*);
