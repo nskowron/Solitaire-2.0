@@ -8,7 +8,7 @@ Pointer::Pointer(Menu* men, Board* boa, PointerMode mod)
 
 void Pointer::AlterMode()
 {
-    Mode = PointerMode(Mode % 4 + 1);
+    Mode = PointerMode(Mode % 3 + 1);
     X = Y = 0;
 }
 
@@ -35,7 +35,9 @@ void Pointer::MvLeft()
         case STACK:     X = (X + 3) % 4; break;
         case HAND:      if(_Board->CurrentCard >= 0) X = (X + 1) % 2; break;
         case COLUMN:    X = (X + 6) % 7; 
-                        if(Y >= _Board->Columns[X].Size())
+                        if(_Board->Columns[X].Size() == 0)
+                            Y = 0;
+                        else if(Y >= _Board->Columns[X].Size())
                             Y = _Board->Columns[X].Size() - 1;
                         break;
         //case MENU:      X = (X + 2) % 3; break;
@@ -49,7 +51,9 @@ void Pointer::MvRight()
         case STACK:     X = (X + 1) % 4; break;
         case HAND:      if(_Board->CurrentCard >= 0) X = (X + 1) % 2; break;
         case COLUMN:    X = (X + 1) % 7; 
-                        if(Y >= _Board->Columns[X].Size())
+                        if(_Board->Columns[X].Size() == 0)
+                            Y = 0;
+                        else if(Y >= _Board->Columns[X].Size())
                             Y = _Board->Columns[X].Size() - 1;
                         break;
         //case MENU:      X = (X + 1) % 3; break;

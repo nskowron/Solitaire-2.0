@@ -31,10 +31,13 @@ void Board::RemoveClip()
     if(Clip.Empty() == false)
     {
         if(Clip.origin.mode == HAND)
+        {
             Hand.Remove(CurrentCard);
+            CurrentCard--;
+        }
 
         else if(Clip.origin.mode == COLUMN)
-            Columns[Clip.origin.X].Remove(Clip.data.column->Size());
+            Columns[Clip.origin.X].Remove(Clip.data.column.Size());
 
         else if(Clip.origin.mode == STACK)
             Stacks[Clip.origin.X].Remove();

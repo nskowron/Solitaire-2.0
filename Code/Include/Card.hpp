@@ -1,7 +1,7 @@
 #pragma once
 
-enum CardValues { ACE = 1, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING };
-enum CardSuits { DIAMONDS = 1, HEARTS, CLUBS, SPADES };
+enum CardValues { NOVAL = 0, ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING };
+enum CardSuits { NOSUI = 0, DIAMONDS, HEARTS, CLUBS, SPADES };
 
 
 class Card
@@ -13,7 +13,8 @@ private:
 public:
     bool Front;
 
-    Card(CardValues val, CardSuits sui, bool front = true) : Value(val), Suit(sui), Front(front) {};
+    Card(bool front = true) : Value(NOVAL), Suit(NOSUI), Front(front) {}
+    Card(CardValues val, CardSuits sui, bool front = true) : Value(val), Suit(sui), Front(front) {}
     const CardValues& GetValue() const { return Value; }
     const CardSuits& GetSuit() const { return Suit; }
 

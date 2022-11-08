@@ -1,5 +1,6 @@
 #include <Board.hpp>
 #include <exception>
+#include <iostream>
 
 Card& Column::operator[] (unsigned int i)
 {
@@ -66,11 +67,15 @@ void Column::Remove(unsigned int i)
         auto currentCard = Cards.end() - i--;
         Cards.erase(currentCard);
     }
+    if(Cards.size() > 0)
     Cards.back().Front = true;
 }
 
 Column Column::PickUp(unsigned int i)
 {
+    if(Cards.size() == 0)
+        throw "There are no cards in the column.\n";
+        
     if(i > Cards.size())
         throw "There aren't that many cards in the column.\n";
 

@@ -107,9 +107,10 @@ void Board::Show(Pointer* Pointer)
             {
                 Columns[j][i].Show();
                 cardShown = true;
-                if(Pointer->GetMode() == COLUMN && Pointer->GetX() == j && Pointer->GetY() == i)
-                    Pointer->Show();
             }
+            if(Pointer->GetMode() == COLUMN && Pointer->GetX() == j && Pointer->GetY() == i)
+                Pointer->Show();
+            
             std::cout << "\t";
         }
         std::cout << "\n";

@@ -28,7 +28,9 @@ void Game::Play()
                     board.CurrentCard++;
                     board.Hand[board.CurrentCard].Front = true;
                 }
-                board.Hand[board.CurrentCard + 1].Front = false;
+
+                if(board.CurrentCard + 1 != board.Hand.Size())
+                    board.Hand[board.CurrentCard + 1].Front = false;
 
                 continue;
             }
@@ -41,26 +43,17 @@ void Game::Play()
                     board.Clip.origin.X = pointer.GetX();
 
                     if(pointer.GetMode() == HAND)
-                    {
-                        board.Clip.data.real_card = board.Hand[board.CurrentCard];
-                        board.Clip.data.card = &board.Clip.data.real_card;
-                    }
+                        board.Clip.data.card = board.Hand[board.CurrentCard];
 
                     else if(pointer.GetMode() == COLUMN)
-                    {
-                        board.Clip.data.real_col = board.Columns[pointer.GetX()].PickUp(board.Columns[pointer.GetX()].Size() - pointer.GetY());
-                        board.Clip.data.column = &board.Clip.data.real_col;
-                    }
+                        board.Clip.data.column = board.Columns[pointer.GetX()].PickUp(board.Columns[pointer.GetX()].Size() - pointer.GetY());
 
                     else if(pointer.GetMode() == STACK)
-                    {
-                        board.Clip.data.real_card = board.Stacks[pointer.GetX()].Top();
-                        board.Clip.data.card = &board.Clip.data.real_card;
-                    }
+                        board.Clip.data.card = board.Stacks[pointer.GetX()].Top();
                 }
-                catch(const std::exception& e)
+                catch(const char* e)
                 {
-                    std::cerr << e.what() << '\n';
+                    std::cerr << e << '\n';
                     board.Clip.Clear();
                 }
             }
@@ -74,25 +67,29 @@ void Game::Play()
 
                     else if(pointer.GetMode() == COLUMN)
                     {
-                        if(board.Clip.data.card == nullptr)
-                            board.Columns[pointer.GetX()].Add(*board.Clip.data.column);
+                        if(board.Clip.data.card == Card())
+                            board.Columns[pointer.GetX()].Add(board.Clip.data.column);
                         else
-                            board.Columns[pointer.GetX()].Add(*board.Clip.data.card);
+                            board.Columns[pointer.GetX()].Add(board.Clip.data.card);
                     }
                     else if(pointer.GetMode() == STACK)
                     {
-                        if(board.Clip.data.card == nullptr)
+                        if(board.Clip.data.column.Size() > 1)
                             throw "Can put only 1 card on a stack.\n";
+
+                        else if(board.Clip.data.column.Size() == 1)
+                            board.Stacks[pointer.GetX()].Add(board.Clip.data.column[0]);
                         else
-                            board.Stacks[pointer.GetX()].Add(*board.Clip.data.card);
+                            board.Stacks[pointer.GetX()].Add(board.Clip.data.card);
                     }
 
                     board.RemoveClip();
                     board.Clip.Clear();
                 }
-                catch(const std::exception& e)
+                catch(const char* e)
                 {
-                    std::cerr << e.what() << '\n';
+                    std::cerr << e << '\n';
+                    board.Clip.Clear();
                 }
             }
         }

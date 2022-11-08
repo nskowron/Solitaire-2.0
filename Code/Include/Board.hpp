@@ -74,11 +74,8 @@ class Clipboard // keeps data about the origin of the clipboard card
 {
     struct Data
     {
-        Column* column;
-        Card* card;
-        Column real_col;
-        Card real_card;
-        Data() : real_card(ACE, SPADES) {}
+        Column column;
+        Card card;
     };
     struct Origin
     {
@@ -92,16 +89,8 @@ public:
 public:
     Origin origin;
 
-    void Clear()
-    {
-        data.card = nullptr;
-        data.column = nullptr;
-    }
-    bool Empty()
-    {
-        return data.card == nullptr && data.column == nullptr;
-    }
-    Clipboard() { Clear(); }
+    void Clear() { data.card = Card(); data.column = Column(); }
+    bool Empty() { return data.card == Card() && data.column.Size() == 0; }
 };
 
 class Pointer;
