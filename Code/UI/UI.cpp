@@ -19,9 +19,9 @@ void Card::Show() const
     }
 
     if(Suit <= 2)
-        SetConsoleTextAttribute(console, 4);
+        SetConsoleTextAttribute(console, Picked ? 4 + 16*5 : 4);
     else
-        SetConsoleTextAttribute(console, 8);
+        SetConsoleTextAttribute(console, Picked ? 8 + 16*5 : 8);
 
     switch(Value)
     {
@@ -62,8 +62,11 @@ void Stack::Show() const
 
 void Pointer::Show()
 {
+    if(_Board == nullptr || _Menu == nullptr)
+        throw "Pointer not assigned.\n";
+
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(console, Color);
+    SetConsoleTextAttribute(console, _Menu->GetProperties()[POINTER_COLOR]);
     std::cout << "<";
     SetConsoleTextAttribute(console, 7);
 }
@@ -165,7 +168,6 @@ void Menu::ShowProperties(Pointer* Pointer)
 
 void Game::Show()
 {
-    //menu.Show(&pointer);
-    //std::cout << "\n___________________________________________________\n\n";
-    board.Show(&pointer);
+    std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+    Board.Show(_Pointer);
 }

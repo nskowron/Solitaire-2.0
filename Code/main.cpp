@@ -1,13 +1,12 @@
 #include <iostream>
 #include <conio.h>
 
-#include <Game.hpp>
+#include <Lobby.hpp>
 
 int main()
 {
     std::cout << "Hello World!\n";
-    Game mygame;
-    mygame.Play();
+    Lobby newLobby;
 
     return 0;
 }

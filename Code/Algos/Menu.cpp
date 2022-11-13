@@ -10,9 +10,10 @@ Menu::Menu()
     Properties[ALTER_MODE] = 'q';
     Properties[INTERACT] = 'e';
     Properties[ABORT] = 'x';
+    Properties[MENU] = 'm';
 
     MenuStrings = { "New Game", "Quit", "Options" };
-    PropertyStrings = { "Pointer color", "Key down", "Key up", "Key left", "Key right", "Alter mode", "Interact", "Abort" };
+    PropertyStrings = { "Pointer color", "Key down", "Key up", "Key left", "Key right", "Alter mode", "Interact", "Abort", "Menu" };
 }
 
 void Menu::SetProperty(PropertyNames name, char value)

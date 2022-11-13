@@ -8,7 +8,7 @@ Card& Column::operator[] (unsigned int i)
     throw "Out of Column's range.\n";
 }
 
-void Column::Add(Card card)
+void Column::Add(Card& card)
 {
     if(Cards.empty())
     {
@@ -44,49 +44,42 @@ void Column::Add(Card card)
     throw "Cards have to be placed decreasingly.\n";
 }
 
-void Column::Add(Column col)
+/* void Column::Add(Column col)
 {
     Add(col.Cards.front());
     for(int i = 1; i < col.Size(); ++i)
     {
         Cards.push_back(col.Cards.at(i));
     }
-}
+} */
 
 void Column::Remove(unsigned int i)
 {
-    if(i > Cards.size())
-    throw "There aren't that many cards in the column.\n";
-
-    if(Cards.at(Cards.size() - i).Front == false)
+    if(operator[](i).Front == false)
         throw "Can't remove uncovered cards.\n";
 
-    while(i > 0)
-    {
-        auto currentCard = Cards.end() - i--;
-        Cards.erase(currentCard);
-    }
+    Cards.erase(Cards.begin() + i, Cards.end());
+
     if(Cards.size() > 0)
-    Cards.back().Front = true;
+        Cards.back().Front = true;
 }
 
-Column Column::PickUp(unsigned int i)
+Card& Column::PickUp(unsigned int i) // Index of pointer
 {
-    if(Cards.size() == 0)
-        throw "There are no cards in the column.\n";
-
-    if(i > Cards.size())
-        throw "There aren't that many cards in the column.\n";
-
-    if(Cards.at(Cards.size() - i).Front == false)
+    if(operator[](i).Front == false)
         throw "Can't pick up uncovered cards.\n";
 
-    Column col;
-    while(i > 0)
-    {
-        auto currentCard = Cards.end() - i--;
-        col.Cards.push_back(*currentCard);
-    }
+    for(unsigned int j = i; j < Size(); ++j)
+        operator[](j).Picked = true;
 
-    return col;
+    return operator[](i);
+}
+
+void Column::Unpick(unsigned int i)
+{
+    while(i < Size())
+    {
+        operator[](i).Picked = false;
+        ++i;
+    }
 }

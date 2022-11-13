@@ -17,23 +17,30 @@ Deck::Deck(bool full)
 
 Card& Deck::operator[](unsigned int i)
 {
-    if(i < Cards.size())
+    if(i < Cards.size() && i >= 0)
         return Cards.at(i);
     throw "Out of Deck's range.\n";
 }
 
-Card& Deck::Remove(unsigned int i)
+Card& Deck::PickUp(unsigned int i)
 {
-    if(i < Cards.size())
-    {
-        Card card(Cards.at(i));
-        Cards.erase(Cards.begin() + i);
-        return card;
-    }
-    throw "Out of Deck's range.\n";
+    operator[](i).Picked = true;
+    return operator[](i);
 }
 
-void Deck::Add(Card card)
+void Deck::Unpick(unsigned int i)
+{
+    operator[](i).Picked = false;
+}
+
+Card Deck::Remove(unsigned int i)
+{
+    Card card(operator[](i));
+    Cards.erase(Cards.begin() + i);
+    return card;
+}
+
+void Deck::Add(Card& card)
 {
     Cards.push_back(card);
 }

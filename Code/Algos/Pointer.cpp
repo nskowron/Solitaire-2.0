@@ -1,13 +1,16 @@
 #include <Pointer.hpp>
 
-Pointer::Pointer(Menu* men, Board* boa, PointerMode mod)
-    : _Board(boa), _Menu(men), X(0), Y(0), Mode(mod)
+
+bool Pointer::operator==(Pointer pointer)
 {
-    Color = (unsigned int)_Menu->GetProperties()[POINTER_COLOR];
+    return Mode == pointer.GetMode() && X == pointer.GetX() && Y == pointer.GetY();
 }
 
 void Pointer::AlterMode()
 {
+    if(_Board == nullptr || _Menu == nullptr)
+        throw "Pointer not assigned.\n";
+    
     Mode = PointerMode(Mode % 3 + 1);
     if(Mode == HAND && _Board->Hand.Size() == 0)
         Mode = PointerMode(Mode + 1);
@@ -17,6 +20,9 @@ void Pointer::AlterMode()
 
 void Pointer::MvUp()
 {
+    if(_Board == nullptr || _Menu == nullptr)
+        throw "Pointer not assigned.\n";
+    
     if(Mode == COLUMN)
         Y = (Y + _Board->Columns[X].Size() - 1) % _Board->Columns[X].Size();
     else if(Mode == PROPERTIES)
@@ -25,6 +31,9 @@ void Pointer::MvUp()
 
 void Pointer::MvDown()
 {
+    if(_Board == nullptr || _Menu == nullptr)
+        throw "Pointer not assigned.\n";
+    
     if(Mode == COLUMN)
         Y = (Y + 1) % _Board->Columns[X].Size();
     else if(Mode == PROPERTIES)
@@ -33,6 +42,9 @@ void Pointer::MvDown()
 
 void Pointer::MvLeft()
 {
+    if(_Board == nullptr || _Menu == nullptr)
+        throw "Pointer not assigned.\n";
+    
     switch(Mode)
     {
         case STACK:     X = (X + 3) % 4; break;
@@ -49,6 +61,9 @@ void Pointer::MvLeft()
 
 void Pointer::MvRight()
 {
+    if(_Board == nullptr || _Menu == nullptr)
+        throw "Pointer not assigned.\n";
+    
     switch(Mode)
     {
         case STACK:     X = (X + 1) % 4; break;

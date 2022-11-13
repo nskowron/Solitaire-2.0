@@ -21,8 +21,10 @@ public:
     Deck(bool full); // true - Deck will be full
 
     Card& operator[] (unsigned int);
-    Card& Remove(unsigned int);
-    void Add(Card);
+    Card& PickUp(unsigned int);
+    void Unpick(unsigned int);
+    Card Remove(unsigned int);
+    void Add(Card&);
     void Shuffle();
 };
 
@@ -36,14 +38,15 @@ public:
     Column(Card card) : Cards({card}) {}
 
     unsigned int Size() { return Cards.size(); }
-    void Push(Card card) { Cards.push_back(card); }
+    void Push(Card& card) { Cards.push_back(card); }
 
     // defined in Column.cpp
     Card& operator[] (unsigned int);
-    void Add(Card); 
-    void Add(Column);
-    void Remove(unsigned int); // removes & returns first x cards
-    Column PickUp(unsigned int); // copies first x cards, doesnt remove them
+    void Add(Card&); 
+    //void Add(Column);
+    void Remove(unsigned int); // removes & returns cards at index x and higher
+    Card& PickUp(unsigned int);
+    void Unpick(unsigned int);
 
     // defined in UI.cpp
     void Show() const;
@@ -63,34 +66,29 @@ public:
     unsigned int Size() { return Cards.size(); }
 
     // defined in Stack.cpp
-    void Add(Card card);
-    Card& Remove();
+    void Add(Card&);
     Card& Top();
+    Card& PickUp();
+    void Unpick();
+    Card Remove();
 
     // defined in UI.cpp (include the lack of card)
     void Show() const;
 };
 
 enum PointerMode;
+class Pointer;
 class Clipboard // keeps data about the origin of the clipboard card
 {
-    struct Data
-    {
-        Column column;
-        Card card;
-    };
-    struct Origin
-    {
-        PointerMode mode;
-        unsigned int X;
-    };
 
 public:
-    Data data;
-    Origin origin;
+    Card* Data;
+    Pointer* Origin;
 
-    void Clear() { data.card = Card(); data.column = Column(); }
-    bool Empty() { return data.card == Card() && data.column.Size() == 0; }
+    Clipboard() { Clear(); }
+
+    void Clear() { Data = nullptr; }
+    bool Empty() { return Data == nullptr; }
 };
 
 class Pointer;
@@ -106,8 +104,10 @@ public:
     // defined in Board.cpp
     Board();
     ~Board();
-    void AddToClip(Pointer*);
-    void PutBackClip(Pointer*);
+    void PickUp(Pointer*);
+    void Unpick(Pointer*);
+    void PutDown(Pointer*);
+    //void ClearClip();
     void RemoveClip();
     void FlipHand();
 

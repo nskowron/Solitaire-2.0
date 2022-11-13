@@ -2,6 +2,7 @@
 
 #include <Board.hpp>
 #include <Menu.hpp>
+#include <iostream>
 
 class Board;
 class Menu;
@@ -14,13 +15,14 @@ private:
     PointerMode Mode;
     unsigned int X;
     unsigned int Y;
-    unsigned int Color;
 
 public:
     Board* _Board;
     Menu* _Menu;
 
-    Pointer(Menu*, Board*, PointerMode = COLUMN);
+    Pointer() :  X(0), Y(0), Mode(COLUMN), _Board(nullptr), _Menu(nullptr) {}
+
+    bool operator==(Pointer);
 
     PointerMode GetMode() { return Mode; }
     unsigned int GetX() { return X; }

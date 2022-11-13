@@ -3,47 +3,67 @@
 #include <conio.h>
 
 
-void Game::Play()
+Game::Game(Menu* men, Pointer* poi) : _Menu(men), _Pointer(poi)
 {
-    char input;
-    while(  board.Stacks[0].Size() != 13 ||
-            board.Stacks[1].Size() != 13 ||
-            board.Stacks[2].Size() != 13 ||
-            board.Stacks[3].Size() != 13 )
+    Board.Clip.Origin = &ClipHolder;
+    _Pointer->_Menu = _Menu;
+    _Pointer->_Board = &Board;
+}
+
+int Game::Play()
+{
+    //Board.Clip.Origin = new Pointer(&menu, &board, PROPERTIES);
+    char input = getch();
+    if(input == _Menu->GetProperties()[MENU])               return 1;
+    else if(input == _Menu->GetProperties()[KEY_DOWN])      _Pointer->MvDown();
+    else if(input == _Menu->GetProperties()[KEY_UP])        _Pointer->MvUp();
+    else if(input == _Menu->GetProperties()[KEY_LEFT])      _Pointer->MvLeft();
+    else if(input == _Menu->GetProperties()[KEY_RIGHT])     _Pointer->MvRight();
+    else if(input == _Menu->GetProperties()[ALTER_MODE])    _Pointer->AlterMode();
+    else if(input == _Menu->GetProperties()[ABORT])
     {
-        std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-        Show();
-        input = getch();
-        if(input == menu.GetProperties()[KEY_DOWN])         pointer.MvDown();
-        else if(input == menu.GetProperties()[KEY_UP])      pointer.MvUp();
-        else if(input == menu.GetProperties()[KEY_LEFT])    pointer.MvLeft();
-        else if(input == menu.GetProperties()[KEY_RIGHT])   pointer.MvRight();
-        else if(input == menu.GetProperties()[ALTER_MODE])  pointer.AlterMode();
-        else if(input == menu.GetProperties()[ABORT])       board.Clip.Clear();
-        else if(input == menu.GetProperties()[INTERACT])
+        if(Board.Clip.Empty() == false)
         {
-            try
+            Board.Unpick(Board.Clip.Origin);
+            Board.Clip.Clear();
+        }
+    }
+    else if(input == _Menu->GetProperties()[INTERACT])
+    {
+        try
+        {
+            if(Board.Clip.Empty())
             {
-                if(pointer.GetMode() == HAND && pointer.GetX() == 0)
+                if(_Pointer->GetMode() == HAND && _Pointer->GetX() == 0)
+                    Board.FlipHand();
+                else
+                    Board.PickUp(_Pointer);
+            }
+            else
+            {
+                if(_Pointer->GetMode() == HAND && _Pointer->GetX() == 0)
                 {
-                    board.Clip.Clear();
-                    board.FlipHand();
+                    Board.Unpick(Board.Clip.Origin);
+                    Board.FlipHand();
+                    Board.Clip.Clear();
                 }
-                else if(board.Clip.Empty())
-                    board.AddToClip(&pointer);
-    
                 else
                 {
-                    board.PutBackClip(&pointer);
-                    board.RemoveClip();
-                    board.Clip.Clear();
+                    Board.PutDown(_Pointer);
+                    Board.Unpick(_Pointer);
+                    Board.RemoveClip();
+                    Board.Clip.Clear();
                 }
             }
-            catch(const char* e)
+        }
+        catch(const char* e)
+        {
+            if(Board.Clip.Empty() == false)
             {
-                std::cerr << e << '\n';
-                board.Clip.Clear();
+                Board.Unpick(Board.Clip.Origin);
+                Board.Clip.Clear();
             }
         }
     }
+    return 0;
 }

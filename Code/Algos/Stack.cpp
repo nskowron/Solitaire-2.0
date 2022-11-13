@@ -1,7 +1,7 @@
 #include <Board.hpp>
 #include <exception>
 
-void Stack::Add(Card card)
+void Stack::Add(Card& card)
 {
     if(Cards.empty())
     {
@@ -25,19 +25,27 @@ void Stack::Add(Card card)
     throw "Cards have to be stacked increasingly, starting with an Ace.\n";
 }
 
-Card& Stack::Remove()
-{
-    if(Cards.empty())
-        throw "The stack is empty.\n";
-
-    Card card(Cards.top());
-    Cards.pop();
-    return card;
-}
-
 Card& Stack::Top()
 {
     if(Cards.empty())
         throw "The stack is empty.\n";
     return Cards.top();
+}
+
+Card& Stack::PickUp()
+{
+    Top().Picked = true;
+    return Top();
+}
+
+void Stack::Unpick()
+{
+    Top().Picked = false;
+}
+
+Card Stack::Remove()
+{
+    Card card = Top();
+    Cards.pop();
+    return card;
 }

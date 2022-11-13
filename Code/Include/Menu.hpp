@@ -9,7 +9,7 @@ class Pointer;
 
 
 enum MenuOptions { NEW_GAME = 0, QUIT, OPTIONS };
-enum PropertyNames { POINTER_COLOR = 0, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, ALTER_MODE, INTERACT, ABORT };
+enum PropertyNames { POINTER_COLOR = 0, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, ALTER_MODE, INTERACT, ABORT, MENU };
 
 class Menu
 {

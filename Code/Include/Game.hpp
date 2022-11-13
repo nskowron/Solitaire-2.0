@@ -6,16 +6,17 @@
 
 class Game
 {
-private:
-    Board board;
-    Menu menu;
-    Pointer pointer;
+public:
+    Board Board;
+    Pointer ClipHolder; // Probably temprorary - needed to avoid errors with Clipboard
+    Menu* _Menu;
+    Pointer* _Pointer;
 
 public:
-    Game() : pointer(&menu, &board) {}
+    Game(Menu*, Pointer*);
 
     //defined in Game.cpp
-    void Play();
+    int Play();
 
     // defined in UI.cpp
     void Show();
