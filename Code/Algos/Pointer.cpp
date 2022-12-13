@@ -6,14 +6,22 @@ bool Pointer::operator==(Pointer pointer)
     return Mode == pointer.GetMode() && X == pointer.GetX() && Y == pointer.GetY();
 }
 
-void Pointer::AlterMode()
+void Pointer::AlterGameMode()
 {
     if(_Board == nullptr || _Menu == nullptr)
         throw "Pointer not assigned.\n";
     
-    Mode = PointerMode(Mode % 3 + 1);
-    if(Mode == HAND && _Board->Hand.Size() == 0)
-        Mode = PointerMode(Mode + 1);
+    if(Mode == COLUMN)
+    {
+        if(_Board->Hand.Size() > 0)
+            Mode = HAND;
+        else
+            Mode = STACK;
+    }
+    else if(Mode == HAND)
+        Mode = STACK;
+    else if(Mode == STACK)
+        Mode = COLUMN;
     
     X = Y = 0;
 }
@@ -55,7 +63,7 @@ void Pointer::MvLeft()
                         else if(Y >= _Board->Columns[X].Size())
                             Y = _Board->Columns[X].Size() - 1;
                         break;
-        //case MENU:      X = (X + 2) % 3; break;
+        case pMENU:      X = (X + _Menu->GetOptions().size() - 1) % _Menu->GetOptions().size(); break;
     }
 }
 
@@ -74,6 +82,6 @@ void Pointer::MvRight()
                         else if(Y >= _Board->Columns[X].Size())
                             Y = _Board->Columns[X].Size() - 1;
                         break;
-        //case MENU:      X = (X + 1) % 3; break;
+        case pMENU:      X = (X + 1) % _Menu->GetOptions().size(); break;
     }
 }

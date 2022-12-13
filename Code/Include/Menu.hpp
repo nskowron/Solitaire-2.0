@@ -4,29 +4,29 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <json/json.h>
+#include <Lobby.hpp>
+
 
 class Pointer;
-
-
-enum MenuOptions { NEW_GAME = 0, QUIT, OPTIONS };
-enum PropertyNames { POINTER_COLOR = 0, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, ALTER_MODE, INTERACT, ABORT, MENU };
-
 class Menu
 {
 private:
-    // probably gonna want to play with some json with this
-    std::map<PropertyNames, char> Properties;
-    std::vector<std::string> MenuStrings;
-    std::vector<std::string> PropertyStrings;
+    std::string DBFile;
+    Json::Value Options;
+    Json::Value Properties;
+    Pointer* _Pointer;
 
 public:
-    std::map<PropertyNames, char>& GetProperties() { return Properties; }
-
     // defined in Menu.cpp
-    Menu();
-    void SetProperty(PropertyNames, char);
+    Menu(Pointer*, std::string);
+    ExitCode Move();
+    void SetProperty();
+
+    const Json::Value& GetOptions() { return Options; }
+    const Json::Value& GetProperties() { return Properties; }
 
     // defined in UI.cpp
-    void Show(Pointer*);
-    void ShowProperties(Pointer*);
+    void Show();
+    void ShowProperties();
 };

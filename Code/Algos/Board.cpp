@@ -4,6 +4,7 @@ Board::Board() : Hand(true), CurrentCard(-1)
 {
     Columns = new Column[7];
     Stacks = new Stack[4];
+    Clip.Origin = new Pointer;
 
     Hand.Shuffle();
     for(int i = 0; i < 7; ++i)
@@ -22,6 +23,7 @@ Board::~Board()
 {
     delete [] Columns;
     delete [] Stacks;
+    delete Clip.Origin;
 }
 
 void Board::PickUp(Pointer* pointer) //podswietla

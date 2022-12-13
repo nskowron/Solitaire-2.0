@@ -66,7 +66,7 @@ void Pointer::Show()
         throw "Pointer not assigned.\n";
 
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(console, _Menu->GetProperties()[POINTER_COLOR]);
+    SetConsoleTextAttribute(console, _Menu->GetProperties()["Pointer Color"].asInt());
     std::cout << "<";
     SetConsoleTextAttribute(console, 7);
 }
@@ -120,41 +120,45 @@ void Board::Show(Pointer* Pointer)
     }
 }
 
-/*
-void Menu::Show(Pointer* Pointer)
+void Menu::Show()
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 
+    if(_Pointer->GetMode() == PROPERTIES)
+    {
+        ShowProperties();
+        return;
+    }
+
     std::cout << "|  ";
-    for(int i = 0; i < 3; ++i)
+    for(unsigned int i = 0; i < Options.size(); ++i)
     {
         SetConsoleTextAttribute(console, 3);
-        std::cout << MenuStrings.at(i);
+        std::cout << Options.getMemberNames()[i];
         SetConsoleTextAttribute(console, 7);
 
-        if(Pointer->GetMode() == MENU && Pointer->GetX() == i)
+        if(_Pointer->GetX() == i)
         {
-            Pointer->Show();
+            _Pointer->Show();
             std::cout << " |  ";
         }
         else std::cout << "  |  ";
     }
-} */
+}
 
-/*
-void Menu::ShowProperties(Pointer* Pointer)
+void Menu::ShowProperties()
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 
     for(int i = 0; i < Properties.size(); ++i)
     {
         SetConsoleTextAttribute(console, 3);
-        std::cout << PropertyStrings.at(i);
+        std::cout << Properties.getMemberNames()[i];
         SetConsoleTextAttribute(console, 7);
-        std::cout << ": " << Properties[PropertyNames(i)];
+        std::cout << ": " << Properties[i];
 
-        if(Pointer->GetMode() == PROPERTIES && Pointer->GetY() == i)
-            Pointer->Show();
+        if(_Pointer->GetY() == i)
+            _Pointer->Show();
 
         std::cout << "\n";
     }
@@ -162,9 +166,9 @@ void Menu::ShowProperties(Pointer* Pointer)
     SetConsoleTextAttribute(console, 3);
     std::cout << "ESC";
     SetConsoleTextAttribute(console, 7);
-    if(Pointer->GetMode() == PROPERTIES && Pointer->GetY() == Properties.size())
-        Pointer->Show();
-} */
+    if(_Pointer->GetY() == Properties.size())
+        _Pointer->Show();
+}
 
 void Game::Show()
 {

@@ -5,22 +5,24 @@
 
 Game::Game(Menu* men, Pointer* poi) : _Menu(men), _Pointer(poi)
 {
-    Board.Clip.Origin = &ClipHolder;
     _Pointer->_Menu = _Menu;
     _Pointer->_Board = &Board;
 }
 
-int Game::Play()
+ExitCode Game::Move()
 {
-    //Board.Clip.Origin = new Pointer(&menu, &board, PROPERTIES);
     char input = getch();
-    if(input == _Menu->GetProperties()[MENU])               return 1;
-    else if(input == _Menu->GetProperties()[KEY_DOWN])      _Pointer->MvDown();
-    else if(input == _Menu->GetProperties()[KEY_UP])        _Pointer->MvUp();
-    else if(input == _Menu->GetProperties()[KEY_LEFT])      _Pointer->MvLeft();
-    else if(input == _Menu->GetProperties()[KEY_RIGHT])     _Pointer->MvRight();
-    else if(input == _Menu->GetProperties()[ALTER_MODE])    _Pointer->AlterMode();
-    else if(input == _Menu->GetProperties()[ABORT])
+    if(input == _Menu->GetProperties()["Open Menu"].asInt())
+    {
+        _Pointer->OpenMenu();
+        return MENU;
+    }
+    else if(input == _Menu->GetProperties()["Key Down"].asInt())    _Pointer->MvDown();
+    else if(input == _Menu->GetProperties()["Key Up"].asInt())      _Pointer->MvUp();
+    else if(input == _Menu->GetProperties()["Key Left"].asInt())    _Pointer->MvLeft();
+    else if(input == _Menu->GetProperties()["Key Right"].asInt())   _Pointer->MvRight();
+    else if(input == _Menu->GetProperties()["Alter Mode"].asInt())  _Pointer->AlterGameMode();
+    else if(input == _Menu->GetProperties()["Drop Cards"].asInt())
     {
         if(Board.Clip.Empty() == false)
         {
@@ -28,7 +30,7 @@ int Game::Play()
             Board.Clip.Clear();
         }
     }
-    else if(input == _Menu->GetProperties()[INTERACT])
+    else if(input == _Menu->GetProperties()["Interact"].asInt())
     {
         try
         {
@@ -65,5 +67,5 @@ int Game::Play()
             }
         }
     }
-    return 0;
+    return GAME;
 }

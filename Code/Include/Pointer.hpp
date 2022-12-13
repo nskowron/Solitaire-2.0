@@ -7,7 +7,7 @@
 class Board;
 class Menu;
 
-enum PointerMode { COLUMN = 1, HAND, STACK /*MENU*/, PROPERTIES };
+enum PointerMode { COLUMN = 1, HAND, STACK, pMENU, PROPERTIES };
 
 class Pointer
 {
@@ -27,9 +27,11 @@ public:
     PointerMode GetMode() { return Mode; }
     unsigned int GetX() { return X; }
     unsigned int GetY() { return Y; }
+    void OpenMenu() { Mode = pMENU; }
+    void OpenProperties() { Mode = PROPERTIES; }
 
     // defined in Pointer.cpp
-    void AlterMode();
+    void AlterGameMode();
     void MvUp();
     void MvDown();
     void MvLeft();

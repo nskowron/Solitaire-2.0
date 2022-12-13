@@ -80,7 +80,6 @@ enum PointerMode;
 class Pointer;
 class Clipboard // keeps data about the origin of the clipboard card
 {
-
 public:
     Card* Data;
     Pointer* Origin;

@@ -1,37 +1,22 @@
 #include <Menu.hpp>
+#include <fstream>
 
-Menu::Menu()
+Menu::Menu(Pointer* poi, std::string db_file) : DBFile(db_file), _Pointer(poi)
 {
-    Properties[POINTER_COLOR] = 5;
-    Properties[KEY_DOWN] = 's';
-    Properties[KEY_UP] = 'w';
-    Properties[KEY_LEFT] = 'a';
-    Properties[KEY_RIGHT] = 'd';
-    Properties[ALTER_MODE] = 'q';
-    Properties[INTERACT] = 'e';
-    Properties[ABORT] = 'x';
-    Properties[MENU] = 'm';
-
-    MenuStrings = { "New Game", "Quit", "Options" };
-    PropertyStrings = { "Pointer color", "Key down", "Key up", "Key left", "Key right", "Alter mode", "Interact", "Abort", "Menu" };
+    Json::Reader reader;
+    std::ifstream data(db_file);
+    reader.parse(data, Options);
+    Properties = Options["Properties"];
 }
 
-void Menu::SetProperty(PropertyNames name, char value)
+void Menu::SetProperty()
 {
-    if(name == POINTER_COLOR)
-    {
-        if(value > 0 && value < 16)
-        {
-            Properties[name] = value;
-            return;
-        }
-        throw "Wrong color value.\n";
-    }
+    if(_Pointer->GetY() > Properties.size() - 1)
+        throw "Out of Menu's range.\n";
 
-    if((value >= 'a' && value <= 'z') || (value >= 'A' && value <= 'Z'))
-    {
-        Properties[name] = value;
-        return;
-    }
-    throw "You can only use letters for now. Sorry for my unprofesionalism.\n";
+    char value;
+    std::cout << "Type in the new value (Enter to confirm): ";
+    std::cin >> value;
+
+    Properties[_Pointer->GetY()] = value;
 }
