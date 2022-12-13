@@ -1,11 +1,18 @@
 #include <Lobby.hpp>
 
-Lobby::Lobby() : Pointer(), Menu(&Pointer, "Properties.json"), Game(&Menu, &Pointer)
+
+void Lobby::Open()
 {
     ExitCode code = GAME;
     while(code != QUIT)
     {
         while(code == GAME)
-            code = Game.Move();
+            code = _Game.Move();
+        while(code == MENU)
+            code = Menu.Move();
+        if(code == NEW)
+        {
+            _Game = Game(&Menu, &Pointer);
+        }
     }
 }

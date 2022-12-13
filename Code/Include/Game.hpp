@@ -1,14 +1,9 @@
 #pragma once
 
-
-#include <Menu.hpp>
 #include <Board.hpp>
-#include <Pointer.hpp>
-#include <Lobby.hpp>
-
+#include <Menu.hpp>
 
 enum ExitCode;
-class Board;
 class Game
 {
 private:

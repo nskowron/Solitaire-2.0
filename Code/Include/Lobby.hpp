@@ -1,18 +1,17 @@
 #pragma once
 
-#include <Game.hpp>
 #include <Menu.hpp>
 #include <Pointer.hpp>
-
-enum ExitCode {GAME = 0, MENU = 1, NEW = 2, QUIT = 3};
+#include <Game.hpp>
 
 class Lobby
 {
 private:
     Menu Menu;
     Pointer Pointer;
-    Game Game;
+    Game _Game;
 
 public:
-    Lobby();
+    Lobby::Lobby() : Pointer(), Menu(&Pointer, "Properties.json"), _Game(&Menu, &Pointer) {}
+    void Open();
 };

@@ -1,9 +1,10 @@
 #pragma once
 
-#include <vector>
-#include <stack>
 #include <Card.hpp>
 #include <Pointer.hpp>
+
+#include <vector>
+#include <stack>
 
 
 class Deck

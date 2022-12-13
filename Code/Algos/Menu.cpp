@@ -9,6 +9,12 @@ Menu::Menu(Pointer* poi, std::string db_file) : DBFile(db_file), _Pointer(poi)
     Properties = Options["Properties"];
 }
 
+ExitCode Menu::Move()
+{
+    Show();
+    return GAME;
+}
+
 void Menu::SetProperty()
 {
     if(_Pointer->GetY() > Properties.size() - 1)

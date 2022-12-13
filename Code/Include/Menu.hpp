@@ -1,12 +1,12 @@
 #pragma once
 
+#include <LobbyExitCodes.hpp>
 #include <Pointer.hpp>
+
 #include <map>
 #include <vector>
 #include <string>
 #include <json/json.h>
-#include <Lobby.hpp>
-
 
 class Pointer;
 class Menu

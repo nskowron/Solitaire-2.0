@@ -11,6 +11,8 @@ Game::Game(Menu* men, Pointer* poi) : _Menu(men), _Pointer(poi)
 
 ExitCode Game::Move()
 {
+    Show();
+
     char input = getch();
     if(input == _Menu->GetProperties()["Open Menu"].asInt())
     {

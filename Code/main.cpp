@@ -6,6 +6,7 @@
 int main()
 {
     Lobby newLobby;
+    newLobby.Open();
 
     return 0;
 }
