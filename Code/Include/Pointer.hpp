@@ -28,8 +28,11 @@ public:
     PointerMode GetMode() { return Mode; }
     unsigned int GetX() { return X; }
     unsigned int GetY() { return Y; }
-    void OpenMenu() { Mode = pMENU; }
-    void OpenProperties() { Mode = PROPERTIES; }
+
+    void OpenMenu() { Mode = pMENU; Reset(); }
+    void OpenProperties() { Mode = PROPERTIES; Reset(); }
+    void OpenGame() { Mode = COLUMN; Reset(); }
+    void Reset() { X = Y = 0; }
 
     // defined in Pointer.cpp
     void AlterGameMode();

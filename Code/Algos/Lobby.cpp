@@ -6,13 +6,23 @@ void Lobby::Open()
     ExitCode code = GAME;
     while(code != QUIT)
     {
-        while(code == GAME)
-            code = _Game.Move();
-        while(code == MENU)
-            code = Menu.Move();
+        if(code == GAME)
+        {
+            Pointer.OpenGame();
+            do code = _Game->Move();
+            while (code == GAME);
+        }
+        if(code == MENU)
+        {
+            Pointer.OpenMenu();
+            do code = Menu.Move();
+            while (code == MENU);
+        }
         if(code == NEW)
         {
-            _Game = Game(&Menu, &Pointer);
+            delete _Game;
+            _Game = new Game(&Menu, &Pointer);
+            code = GAME;
         }
     }
 }

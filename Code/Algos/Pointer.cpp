@@ -23,7 +23,7 @@ void Pointer::AlterGameMode()
     else if(Mode == STACK)
         Mode = COLUMN;
     
-    X = Y = 0;
+    Reset();
 }
 
 void Pointer::MvUp()

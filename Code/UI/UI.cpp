@@ -123,14 +123,7 @@ void Board::Show(Pointer* Pointer)
 void Menu::Show()
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-
-    if(_Pointer->GetMode() == PROPERTIES)
-    {
-        ShowProperties();
-        return;
-    }
-
-    std::cout << "|  ";
+    std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n|  ";
     for(unsigned int i = 0; i < Options.size(); ++i)
     {
         SetConsoleTextAttribute(console, 3);
@@ -149,13 +142,15 @@ void Menu::Show()
 void Menu::ShowProperties()
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-
+    std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+    std::string propName;
     for(int i = 0; i < Properties.size(); ++i)
     {
+        propName = Properties.getMemberNames()[i];
         SetConsoleTextAttribute(console, 3);
-        std::cout << Properties.getMemberNames()[i];
+        std::cout << propName;
         SetConsoleTextAttribute(console, 7);
-        std::cout << ": " << Properties[i];
+        std::cout << ": " << (char)Properties[propName].asInt();
 
         if(_Pointer->GetY() == i)
             _Pointer->Show();
@@ -164,7 +159,7 @@ void Menu::ShowProperties()
     }
 
     SetConsoleTextAttribute(console, 3);
-    std::cout << "ESC";
+    std::cout << "\nReturn";
     SetConsoleTextAttribute(console, 7);
     if(_Pointer->GetY() == Properties.size())
         _Pointer->Show();

@@ -6,7 +6,7 @@
 enum ExitCode;
 class Game
 {
-private:
+public:
     Board Board;
     Menu* _Menu;
     Pointer* _Pointer;

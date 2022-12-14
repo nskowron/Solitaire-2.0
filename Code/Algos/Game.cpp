@@ -14,11 +14,7 @@ ExitCode Game::Move()
     Show();
 
     char input = getch();
-    if(input == _Menu->GetProperties()["Open Menu"].asInt())
-    {
-        _Pointer->OpenMenu();
-        return MENU;
-    }
+    if(input == _Menu->GetProperties()["Open Menu"].asInt())        return MENU;
     else if(input == _Menu->GetProperties()["Key Down"].asInt())    _Pointer->MvDown();
     else if(input == _Menu->GetProperties()["Key Up"].asInt())      _Pointer->MvUp();
     else if(input == _Menu->GetProperties()["Key Left"].asInt())    _Pointer->MvLeft();

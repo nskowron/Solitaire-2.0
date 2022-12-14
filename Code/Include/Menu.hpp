@@ -21,6 +21,7 @@ public:
     // defined in Menu.cpp
     Menu(Pointer*, std::string);
     ExitCode Move();
+    ExitCode MoveProperties();
     void SetProperty();
 
     const Json::Value& GetOptions() { return Options; }

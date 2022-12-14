@@ -9,9 +9,12 @@ class Lobby
 private:
     Menu Menu;
     Pointer Pointer;
-    Game _Game;
+    Game* _Game;
 
 public:
-    Lobby::Lobby() : Pointer(), Menu(&Pointer, "Properties.json"), _Game(&Menu, &Pointer) {}
+    Lobby() : Pointer(), Menu(&Pointer, "Properties.json") { _Game = new Game(&Menu, &Pointer); }
+    ~Lobby() { delete _Game; }
+
+    // Defined in Lobby.cpp
     void Open();
 };
