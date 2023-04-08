@@ -39,7 +39,7 @@ public:
     Column(Card card) : Cards({card}) {}
 
     unsigned int Size() { return Cards.size(); }
-    void Push(Card& card) { Cards.push_back(card); }
+    void Push(Card card) { Cards.push_back(card); }
 
     // defined in Column.cpp
     Card& operator[] (unsigned int);
@@ -77,7 +77,7 @@ public:
     void Show() const;
 };
 
-enum PointerMode;
+//enum PointerMode;
 class Pointer;
 class Clipboard // keeps data about the origin of the clipboard card
 {

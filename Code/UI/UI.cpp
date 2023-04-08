@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <Windows.h>
+#include <cstdlib>
 
 void Card::Show() const
 {
@@ -122,8 +123,9 @@ void Board::Show(Pointer* Pointer)
 
 void Menu::Show()
 {
+    system("cls");
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-    std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n|  ";
+    std::cout << "|  ";
     for(unsigned int i = 0; i < Options.size(); ++i)
     {
         SetConsoleTextAttribute(console, 3);
@@ -141,8 +143,8 @@ void Menu::Show()
 
 void Menu::ShowProperties()
 {
+    system("cls");
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-    std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
     std::string propName;
     for(int i = 0; i < Properties.size(); ++i)
     {
@@ -150,7 +152,10 @@ void Menu::ShowProperties()
         SetConsoleTextAttribute(console, 3);
         std::cout << propName;
         SetConsoleTextAttribute(console, 7);
-        std::cout << ": " << (char)Properties[propName].asInt();
+        if(propName == "Pointer Color")
+            std::cout << ": " << (int)Properties[propName].asInt();
+        else
+            std::cout << ": " << (char)Properties[propName].asInt();
 
         if(_Pointer->GetY() == i)
             _Pointer->Show();
@@ -167,6 +172,6 @@ void Menu::ShowProperties()
 
 void Game::Show()
 {
-    std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+    system("cls");
     Board.Show(_Pointer);
 }
