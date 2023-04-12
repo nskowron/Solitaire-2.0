@@ -2,6 +2,7 @@
 #include <Menu.hpp>
 #include <Pointer.hpp>
 #include <Game.hpp>
+#include <Button.hpp>
 
 #include <iostream>
 #include <Windows.h>
@@ -174,4 +175,35 @@ void Game::Show()
 {
     system("cls");
     Board.Show(_Pointer);
+
+    if(Finish)
+    {
+        HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(console, _Menu->GetProperties()["Pointer Color"].asInt());
+        std::cout << "\nPress [" << (char)_Menu->GetProperties()["Finish"].asInt() << "] to auto-finish.\n";
+        SetConsoleTextAttribute(console, 7);
+    }
+}
+
+void Button::Show()
+{
+    system("cls");
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(console, 7);
+    std::cout << Message << "\n\n";
+
+    auto it = Options.begin();
+    for(unsigned int i = 0; i < Options.size(); ++i)
+    {
+        SetConsoleTextAttribute(console, 3);
+        std::cout << it->first;
+
+        if(_Pointer->GetX() == i)
+            _Pointer->Show();
+        else std::cout << " ";
+        std::cout << "   ";
+
+        it++;
+    }
+    SetConsoleTextAttribute(console, 7);
 }

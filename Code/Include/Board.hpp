@@ -33,6 +33,7 @@ class Column
 {
 private:
     std::vector<Card> Cards;
+    //unsigned int Uncovered;
 
 public:
     Column() : Cards({}) {}
@@ -43,6 +44,7 @@ public:
 
     // defined in Column.cpp
     Card& operator[] (unsigned int);
+    //unsigned int GetUncovered() { return Uncovered; }
     void Add(Card&); 
     //void Add(Column);
     void Remove(unsigned int); // removes & returns cards at index x and higher
@@ -104,12 +106,15 @@ public:
     // defined in Board.cpp
     Board();
     ~Board();
+    //unsigned int GetUncovered();
     void PickUp(Pointer*);
     void Unpick(Pointer*);
     void PutDown(Pointer*);
     //void ClearClip();
     void RemoveClip();
     void FlipHand();
+
+    bool AllUncovered();
 
     // defined in UI.cpp
     void Show(Pointer*);

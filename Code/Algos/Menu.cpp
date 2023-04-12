@@ -80,7 +80,7 @@ void Menu::SetProperty()
         throw "Out of Menu's range.\n";
 
     char value;
-    std::cout << "Type in the new value (Enter to confirm): ";
+    std::cout << "\n\nType in the new value (Enter to confirm): ";
     std::cin >> value;
 
     Properties[Properties.getMemberNames()[_Pointer->GetY()]] = (int)value;

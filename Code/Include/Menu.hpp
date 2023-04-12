@@ -2,6 +2,7 @@
 
 #include <LobbyExitCodes.hpp>
 #include <Pointer.hpp>
+//#include <Button.hpp>
 
 #include <map>
 #include <vector>
@@ -9,6 +10,7 @@
 #include <json/json.h>
 
 class Pointer;
+//class Button;
 class Menu
 {
 private:

@@ -111,3 +111,16 @@ void Board::FlipHand()
     if(CurrentCard + 1 != Hand.Size())
         Hand[CurrentCard + 1].Front = false;
 }
+
+bool Board::AllUncovered()
+{
+    if(Hand.Size() > 0)
+        return false;
+
+    for(unsigned int i = 0; i < 7; ++i)
+    {
+        if(Columns[i].Size() > 0 && Columns[i][0].Front == false)
+            return false;
+    }
+    return true;
+}

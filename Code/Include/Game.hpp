@@ -6,10 +6,13 @@
 enum ExitCode;
 class Game
 {
-public:
+private:
     Board Board;
     Menu* _Menu;
     Pointer* _Pointer;
+    bool Finish;
+
+    void AutoFinish();
 
 public:
     Game(Menu*, Pointer*);
