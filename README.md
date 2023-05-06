@@ -9,7 +9,7 @@ It's a second attempt at making a neat Solitire game, but the 2.0 doesn't mean m
 ~~~
 mkdir build
 cd build
-cmake .. _("-G Unix Makefiles" if you're on Windows)_
+cmake .. //"-G Unix Makefiles" if you're on Windows
 make
 ~~~
 
