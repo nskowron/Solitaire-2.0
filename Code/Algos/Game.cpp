@@ -106,13 +106,13 @@ void Game::AutoFinish()
             try
             {
                 Board.PickUp(_Pointer);
+                Board.Unpick(_Pointer);
                 _Pointer->AlterGameMode();
                 for(unsigned int sta = 0; sta < 4; ++sta)
                 {
                     try
                     {
                         Board.PutDown(_Pointer);
-                        Board.Unpick(_Pointer);
                         Board.RemoveClip();
                         Board.Clip.Clear();
 
@@ -128,10 +128,7 @@ void Game::AutoFinish()
             catch(const char* e)
             {
                 if(Board.Clip.Empty() == false)
-                {
-                    Board.Unpick(Board.Clip.Origin);
                     Board.Clip.Clear();
-                }
             }
         }
     }
