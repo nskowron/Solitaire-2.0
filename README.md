@@ -2,3 +2,18 @@
 A personal project i'm making to learn how to organise classes and files.
 
 It's a second attempt at making a neat Solitire game, but the 2.0 doesn't mean much, it just looks cool.
+
+---
+
+## Usage
+~~~
+mkdir build
+cd build
+cmake .. //"-G Unix Makefiles" if you're on Windows
+make
+~~~
+
+And if you want to create an NSIS installer of the project:
+~~~
+cpack
+~~~
